@@ -25,11 +25,11 @@ MCPServer class >> startOn: aPortNumber [
 ]
 
 { #category : 'initialization' }
-MCPServer >> defineRoutesOn: server [
-	"Define the MCP specific routes"
+MCPServer >> addRoutesTo: server [
+	"Define the MCP specific routes on the Teapot instance"
 
 	"GET / - Server Information (MCP Spec Section 3.1)"
-	server get: '/' bind: [ :request | 
+	server GET: '/' -> [ :request | " <-- Correct syntax: VERB / '/path' -> block "
 		| responseData jsonString |
 		responseData := Dictionary new
 			at: 'name' put: 'Pharo MCP Demo Server';
@@ -40,12 +40,12 @@ MCPServer >> defineRoutesOn: server [
 		
 		jsonString := NeoJSONWriter toString: responseData.
 		
-		TeapotResponse ok 
+		TeaResponse ok 
 			contentType: ZnMimeType applicationJson; 
 			entity: jsonString ].
 
 	"GET /context - The Root Context Object (MCP Spec Section 3.2)"
-	server get: '/context' bind: [ :request |
+	server GET: '/context' -> [ :request | " <-- Correct syntax "
 		| responseData jsonString |
 		"TODO: Replace this with actual context data retrieval"
 		responseData := Dictionary new
@@ -57,12 +57,11 @@ MCPServer >> defineRoutesOn: server [
 			
 		jsonString := NeoJSONWriter toString: responseData.
 		
-		TeapotResponse ok
+		TeaResponse ok
 			contentType: ZnMimeType applicationJson;
 			entity: jsonString ].
 		
-	"Add more routes here for specific models or child contexts later"
-
+	"Add more routes here using the 'server VERB / '/path' -> block' syntax"
 ]
 
 { #category : 'initialization' }
@@ -101,19 +100,18 @@ MCPServer >> start [
 
 	Transcript show: 'Starting MCP Server on port: '; show: port printString; cr.
 	
-	"Create and configure Teapot"
+	"Create and configure Teapot basic options"
 	teapotInstance := Teapot configure: { 
 		#port -> self port.
 		#debugMode -> true. "Enable for development, disable for production"
 	}.
 	
-	"Define our MCP routes"
-	self defineRoutesOn: teapotInstance.
+	"Define our MCP routes on the created instance"
+	self addRoutesTo: teapotInstance. " <-- Make sure this calls the corrected method"
 
 	"Start listening"
 	teapotInstance start. 
 	Transcript show: 'MCP Server started successfully.'; cr.
-
 ]
 
 { #category : 'initialization' }

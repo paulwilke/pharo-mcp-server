@@ -15,23 +15,43 @@ BaselineOfMCPFramework class >> preloadForDependencies: spec [
 BaselineOfMCPFramework >> baseline: spec [
 	<baseline>
 	spec for: #common do: [
-		"External Dependencies"
+		"== External Dependencies =="
+		"Load baselines of required external projects."
+		
 		spec baseline: 'Teapot' with: [
 			 spec repository: 'github://zeroflag/Teapot:master/src' ].
+		
 		spec baseline: 'NeoJSON' with: [
 			 spec repository: 'github://svenvc/NeoJSON:master/repository' ].
+		
 		spec baseline: 'ZincHTTPComponents' with: [
 			 spec repository: 'github://svenvc/zinc:master/repository' ].
 		
+		"== Your Project Package =="
+		"Define the main package for your MCP framework."
 		spec package: 'MCPFramework' with: [
-			 spec repository: 'github://paulwilke/pharo-mcp-server:main/src'. 
-			 spec requires: #('Teapot' 'NeoJSON' 'ZincHTTPComponents' ). "Explicit dependencies"
-			 ].
+			"Repository containing *only* this package's code.
+			 IMPORTANT: Ensure ':main/src' path is correct."
+			spec repository: 'github://paulwilke/pharo-mcp-server:main/src'. 
+			
+			"Declare required external baselines for this package."
+			spec requires: #('Teapot' 'NeoJSON' 'ZincHTTPComponents'). 
+		].
 
-		"Define Groups"
+		"== Group Definitions =="
+		"Groups bundle packages for easier loading."
+		
+		"The 'Core' group contains essential functionality."
 		spec group: 'Core' with: #('MCPFramework').
 		
-		"Optional: Add a group for tests later"
-		spec group: 'Tests' with: #(). 
+		"The 'default' group loads when no group is specified.
+		 Usually includes 'Core'."
+		spec group: 'default' with: #('Core'). 
+		
+		"The 'Tests' group for future test packages."
+		spec group: 'Tests' with: #(). "Add test packages here later, e.g., 'MCPFramework-Tests'"
+		
+		"Optional: If tests also need Core:"
+		"spec group: 'Tests' with: #('Core' 'MCPFramework-Tests')." 
 	].
 ]

@@ -2,7 +2,8 @@ Class {
 	#name : 'BaselineOfMCPFramework',
 	#superclass : 'BaselineOf',
 	#category : 'MCPFramework-Baseline',
-	#package : 'MCPFramework-Baseline'
+	#package : 'MCPFramework',
+	#tag : 'Baseline'
 }
 
 { #category : 'as yet unclassified' }

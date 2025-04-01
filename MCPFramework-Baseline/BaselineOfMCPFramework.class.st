@@ -23,19 +23,13 @@ BaselineOfMCPFramework >> baseline: spec [
 		spec baseline: 'ZincHTTPComponents' with: [
 			 spec repository: 'github://svenvc/zinc:master/repository' ].
 		
-		"Voyage - Core is always needed"
- 		spec baseline: 'Voyage' with: [
-			 spec repository: 'github://pharo-nosql/voyage:master/mc' ].
-		
-		"Your MCP Framework Package - TODO: Update repository URL!"
 		spec package: 'MCPFramework' with: [
 			 spec repository: 'github://paulwilke/pharo-mcp-server:main/src'. 
-			 spec requires: #('Teapot' 'NeoJSON' 'ZincHTTPComponents' 'Voyage' ). "Explicit dependencies"
+			 spec requires: #('Teapot' 'NeoJSON' 'ZincHTTPComponents' ). "Explicit dependencies"
 			 ].
 
 		"Define Groups"
 		spec group: 'Core' with: #('MCPFramework').
-		spec group: 'Mongo' with: #('mongo' 'tests'). "Load Core + Mongo by default"
 		
 		"Optional: Add a group for tests later"
 		spec group: 'Tests' with: #(). 

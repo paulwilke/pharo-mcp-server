@@ -1,6 +1,8 @@
 # Pharo MCP Server
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Certified by MCP Review](https://img.shields.io/badge/MCP_Review-Certified-blue)](https://mcpreview.com/mcp-servers/paulwilke/pharo-mcp-server)
+
 <!-- Add other badges later, e.g., build status, version -->
 
 **Pharo Smalltalk implementation of Anthropic's Model Context Protocol (MCP) server specification. Enables LLMs like Claude to interact with Pharo applications.**
